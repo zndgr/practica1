@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día de Muertos y La Catrina</title>
+    <style>
+/* === ESTILOS GENERALES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #FFD700 0%, #FF4500 100%);
+    color: #2c2c2c;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.5s, color 0.5s;
+}
+
+/* === ENCABEZADO === */
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #FF6F61, #FFB347);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* === CONTENEDOR GENERAL === */
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+/* === SECCIONES === */
+.section {
+    margin-bottom: 3rem;
+    background: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: background 0.5s, color 0.5s;
+}
+
+.section h2 {
+    color: #C21807;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.section h3 {
+    color: #E65100;
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+}
+
+/* === TEXTO DESTACADO === */
+.highlight {
+    background: #FFF4E1;
+    border-left: 6px solid #FF9800;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 10px;
+}
+
+/* === ELEMENTOS DEL ALTAR === */
+.altar-elements {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.element-card {
+    background: #FFE0B2;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.element-card:hover {
+    transform: scale(1.05);
+    background: #FFD180;
+}
+
+/* === SECCIÓN CATRINA === */
+.catrina-section {
+    background: #FFF3E0;
+}
+
+.catrina-section h2 {
+    color: #AD1457;
+}
+
+.catrina-section h3 {
+    color: #6A1B9A;
+}
+
+/* === TARJETAS DE LUGARES === */
+.location-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.location-card:hover {
+    transform: translateY(-5px);
+}
+
+.location-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.location-icon {
+    font-size: 1.8rem;
+}
+
+.image-placeholder {
+    background: #FFEFD5;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.info-item {
+    background: #FFF8E1;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #BF360C;
+}
+
+.price-tag {
+    background: #FFEB3B;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding: 0.6rem;
+    border-radius: 8px;
+}
+
+/* === DECORACIÓN === */
+.decoration {
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 2rem 0;
+}
+
+/* === MODO OSCURO === */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #f2f2f2;
+}
+
+body.dark-mode header {
+    background: linear-gradient(135deg, #4A148C, #880E4F);
+}
+
+body.dark-mode .section {
+    background: #2c2c2c;
+}
+
+body.dark-mode .highlight {
+    background: #3b3b3b;
+    border-left-color: #FFB300;
+}
+
+body.dark-mode .element-card {
+    background: #4a4a4a;
+    color: #fff;
+}
+
+body.dark-mode .location-card {
+    background: #2d2d2d;
+}
+
+body.dark-mode .price-tag {
+    background: #FF6F00;
+    color: #fff;
+}
+
+/* === BOTÓN MODO OSCURO === */
+.dark-toggle {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    background: #fff;
+    border: none;
+    font-size: 1.3rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.dark-toggle:hover {
+    background: #FFB300;
+    color: #fff;
+}
+
+/* === REDES SOCIALES === */
+.social-icons {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    font-size: 1.6rem;
+    color: #C21807;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #FF6F00;
+}
+
+</style>
+
+
+</head>
+<body>
+    <header>
+        <h1>🌺 Día de Muertos 💀</h1>
+        <p class="subtitle">Una Celebración de Vida y Memoria</p>
+    </header>
+
+
+<div class="container">
+    <div class="section">
+        <h2>El Día de Muertos</h2>
+        <p>
+            El Día de Muertos es una de las tradiciones más emblemáticas y significativas de México, reconocida por la UNESCO como Patrimonio Cultural Inmaterial de la Humanidad. Esta celebración, que se lleva a cabo los días 1 y 2 de noviembre, representa una fusión única entre las creencias prehispánicas y las tradiciones católicas traídas por los españoles durante la conquista.
+        </p>
+        <p>
+            A diferencia de otras culturas donde la muerte se ve con temor o tristeza, en México se celebra con alegría, color y música. Los mexicanos creen que durante estos días, las almas de los difuntos regresan del más allá para visitar a sus seres queridos, disfrutar de sus comidas favoritas y convivir con los vivos.
+        </p>
+
+        <div class="highlight">
+            <p><strong>💀 "La muerte no nos roba los seres amados. Al contrario, nos los guarda y nos los inmortaliza en el recuerdo"</strong></p>
+        </div>
+
+        <h3>Orígenes Prehispánicos</h3>
+        <p>
+            La tradición del Día de Muertos tiene raíces que se remontan a más de 3,000 años en las culturas mesoamericanas como los aztecas, mayas, purépechas, nahuas y totonacas. Para estas civilizaciones, la muerte no era el final de la existencia, sino una transición hacia otra forma de vida.
+        </p>
+        <p>
+            Los aztecas dedicaban no uno, sino varios meses a la celebración de sus muertos. La diosa Mictecacíhuatl, conocida como la "Dama de la Muerte", era la encargada de cuidar los huesos de los difuntos y presidir las festividades.
+        </p>
+
+        <h3>Elementos del Altar de Muertos</h3>
+        <div class="altar-elements">
+            <div class="element-card">
+                <h4>🕯️ Velas y Veladoras</h4>
+                <p>Iluminan el camino para que las almas encuentren su regreso a casa.</p>
+            </div>
+            <div class="element-card">
+                <h4>🌼 Flor de Cempasúchil</h4>
+                <p>Su color naranja intenso y aroma guían a los espíritus hacia el altar.</p>
+            </div>
+            <div class="element-card">
+                <h4>💀 Calaveras de Azúcar</h4>
+                <p>Representan la muerte de manera alegre y colorida, a menudo con nombres.</p>
+            </div>
+            <div class="element-card">
+                <h4>🍞 Pan de Muerto</h4>
+                <p>Pan dulce tradicional que simboliza el cuerpo de los difuntos.</p>
+            </div>
+            <div class="element-card">
+                <h4>🖼️ Fotografías</h4>
+                <p>Imágenes de los seres queridos fallecidos a quienes se dedica el altar.</p>
+            </div>
+            <div class="element-card">
+                <h4>💧 Agua</h4>
+                <p>Para calmar la sed de las almas después de su largo viaje.</p>
+            </div>
+            <div class="element-card">
+                <h4>🧂 Sal</h4>
+                <p>Purifica el alma y evita que se corrompa en su viaje de ida y vuelta.</p>
+            </div>
+            <div class="element-card">
+                <h4>🍽️ Comida Favorita</h4>
+                <p>Platillos que disfrutaba el difunto en vida, preparados con amor.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section catrina-section">
+        <h2>🎭 La Catrina: Icono de México</h2>
+        
+        <h3>Origen e Historia</h3>
+        <p>
+            La Catrina es uno de los símbolos más reconocibles de México en todo el mundo, pero su origen es relativamente reciente. Esta elegante calavera fue creada en 1912 por el caricaturista e ilustrador mexicano José Guadalupe Posada, originalmente conocida como "La Calavera Garbancera".
+        </p>
+        <p>
+            Posada creó esta imagen como una sátira social durante el Porfiriato, una época en la que muchos mexicanos renegaban de sus raíces indígenas y aspiraban a adoptar costumbres europeas. El término "garbancera" se refería a las personas que, aunque eran de origen humilde (vendían garbanzos), pretendían aparentar un estatus social más alto.
+        </p>
+
+        <h3>La Transformación de Diego Rivera</h3>
+        <p>
+            Fue el muralista Diego Rivera quien inmortalizó y transformó a la Calavera Garbancera en "La Catrina" que conocemos hoy. En 1947, Rivera la incluyó en su mural "Sueño de una tarde dominical en la Alameda Central", vistiéndola con un elegante sombrero de plumas al estilo europeo y un boa de plumas.
+        </p>
+        <p>
+            Rivera la colocó en el centro del mural, acompañada de él mismo cuando era niño y de su esposa Frida Kahlo. Esta representación consolidó a La Catrina como símbolo de la identidad mexicana y de la inevitable igualdad que trae la muerte, sin importar la clase social.
+        </p>
+
+        <h3>Significado y Simbolismo</h3>
+        <p>
+            La Catrina representa varios conceptos importantes en la cultura mexicana:
+        </p>
+        <div class="highlight">
+            <p><strong>La Muerte como Igualadora:</strong> Sin importar riqueza, belleza o poder, todos compartimos el mismo destino final.</p>
+            <p><strong>Crítica Social:</strong> Una burla a quienes niegan sus raíces y pretenden ser lo que no son.</p>
+            <p><strong>Celebración de la Muerte:</strong> La capacidad mexicana de reírse de la muerte y enfrentarla con humor.</p>
+            <p><strong>Identidad Nacional:</strong> Un símbolo de orgullo por las tradiciones mexicanas y su visión única de la muerte.</p>
+        </div>
+
+        <h3>La Catrina en la Actualidad</h3>
+        <p>
+            Hoy en día, La Catrina se ha convertido en un ícono cultural que trasciende fronteras. Durante las celebraciones del Día de Muertos, miles de personas se pintan el rostro como catrinas y catrines, usando maquillaje elaborado que combina elementos de calavera con flores, colores vibrantes y diseños artísticos.
+        </p>
+        <p>
+            La imagen de La Catrina se encuentra en artesanías, pinturas, esculturas, disfraces y todo tipo de expresiones artísticas. Se ha convertido en embajadora de la cultura mexicana y del Día de Muertos alrededor del mundo, representando la manera única en que México honra y celebra a sus muertos.
+        </p>
+    </div>
+  <h2>🏛️ Ciudad de México - El Corazón de la Celebración</h2>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">🏛️</span>
+                    <div>
+                        <h3>Megaofrenda del Zócalo</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🌺💀🌺</div>
+                <p>
+                    La Plaza de la Constitución se viste de gala con la ofrenda monumental más grande del país. 
+                    En 2025, estará dedicada a Tonantzin (Diosa Madre mexica) y otras deidades femeninas prehispánicas, 
+                    reconociendo el legado de las mujeres indígenas en el marco de los 700 años de México-Tenochtitlan.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Fechas</div>
+                        <div class="info-value">1-2 de noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Ubicación</div>
+                        <div class="info-value">12 km de Pátzcuaro</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Zona Arqueológica</div>
+                        <div class="info-value">$80 pesos</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎭 Especial</div>
+                        <div class="info-value">Procesión de velas al cementerio</div>
+                    </div>
+                </div>
+                <div class="price-tag">$80 pesos (zona arqueológica)</div>
+            </div>
+
+            <div class="decoration">🌼 💀 🌼</div>
+
+            <h2>🏺 Oaxaca - Patrimonio Cultural Vivo</h2>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">🎉</span>
+                    <div>
+                        <h3>Festival de Día de Muertos en Oaxaca</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🎨🦴🎨</div>
+                <p>
+                    Oaxaca es considerado uno de los mejores lugares del mundo para vivir el Día de Muertos. 
+                    La ciudad se transforma con tapetes de arena, comparsas de calenda, mezcal y deliciosa 
+                    gastronomía tradicional.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Fechas</div>
+                        <div class="info-value">31 octubre - 2 noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Centro Histórico</div>
+                        <div class="info-value">Plazas, mercados y panteones</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Actividades</div>
+                        <div class="info-value">Mayoría GRATUITAS</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎭 Imperdible</div>
+                        <div class="info-value">Comparsas y tapetes de arena</div>
+                    </div>
+                </div>
+                <div class="price-tag">✨ GRATIS ✨</div>
+            </div>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">⛰️</span>
+                    <div>
+                        <h3>Panteón General de Oaxaca</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🕯️⛪🕯️</div>
+                <p>
+                    El cementerio más emblemático de Oaxaca se ilumina con miles de velas el 31 de octubre y 
+                    1 de noviembre. Las familias decoran las tumbas con flores, velas y ofrendas.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Noche especial</div>
+                        <div class="info-value">31 octubre, desde las 18:00 hrs</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Ubicación</div>
+                        <div class="info-value">Av. Independencia, Centro</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Entrada</div>
+                        <div class="info-value">GRATUITA</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚠️ Tip</div>
+                        <div class="info-value">Llega temprano, hay mucha gente</div>
+                    </div>
+                </div>
+                <div class="price-tag">✨ GRATIS ✨</div>
+            </div>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">🍃</span>
+                    <div>
+                        <h3>Comunidades Indígenas (Etla, Tlacolula, Ocotlán)</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🏘️🌺🏘️</div>
+                <p>
+                    Las comunidades zapotecas y mixtecas mantienen las tradiciones más auténticas. Visita sus 
+                    panteones y mercados para vivir el Día de Muertos de manera genuina.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Fechas</div>
+                        <div class="info-value">31 octubre - 2 noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Distancia</div>
+                        <div class="info-value">20-30 km de Oaxaca ciudad</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Acceso</div>
+                        <div class="info-value">GRATUITO (respeto a la comunidad)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🚌 Transporte</div>
+                        <div class="info-value">$30-$50 pesos en autobús local</div>
+                    </div>
+                </div>
+                <div class="price-tag">✨ GRATIS ✨</div>
+            </div>
+
+            <div class="decoration">🌼 💀 🌼</div>
+
+            <h2>🏔️ Otros Destinos Imperdibles</h2>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">⛰️</span>
+                    <div>
+                        <h3>Huaquechula, Puebla</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🏛️✨🏛️</div>
+                <p>
+                    Famoso por sus ofrendas monumentales de tres pisos que llenan casas enteras. Las familias 
+                    abren sus puertas para mostrar altares espectaculares decorados con papel picado, flores 
+                    y cientos de velas.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Fechas</div>
+                        <div class="info-value">1-2 de noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Ubicación</div>
+                        <div class="info-value">50 km de Puebla capital</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Entrada casas</div>
+                        <div class="info-value">GRATUITA (se agradece cooperación)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎭 Especial</div>
+                        <div class="info-value">Ofrendas de 3 pisos monumentales</div>
+                    </div>
+                </div>
+                <div class="price-tag">✨ GRATIS (cooperación voluntaria) ✨</div>
+            </div>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">🏛️</span>
+                    <div>
+                        <h3>Aguascalientes - Festival de las Calaveras</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🎪💀🎪</div>
+                <p>
+                    Uno de los festivales urbanos más importantes de México, con 11 días de actividades 
+                    culturales, teatro, música, exposiciones y el Gran Desfile de las Calaveras.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Festival completo</div>
+                        <div class="info-value">25 octubre - 4 noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎭 Actividades</div>
+                        <div class="info-value">+350 eventos culturales</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">💰 Mayoría eventos</div>
+                        <div class="info-value">GRATUITOS</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Sedes</div>
+                        <div class="info-value">Centro Histórico y museos</div>
+                    </div>
+                </div>
+                <div class="price-tag">✨ Mayoría GRATIS ✨</div>
+            </div>
+
+            <div class="location-card">
+                <div class="location-header">
+                    <span class="location-icon">🌊</span>
+                    <div>
+                        <h3>Xcaret, Quintana Roo - Festival de Tradiciones</h3>
+                    </div>
+                </div>
+                <div class="image-placeholder">🏝️🎭🏝️</div>
+                <p>
+                    El parque eco-arqueológico más famoso de México celebra el Día de Muertos con un festival 
+                    espectacular que mezcla tradición, música, gastronomía y espectáculos artísticos en un 
+                    entorno paradisíaco.
+                </p>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">📅 Festival 2025</div>
+                        <div class="info-value">25 octubre - 3 noviembre</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📍 Ubicación</div>
+                        <div class="info-value">Playa del Carmen, Riviera Maya</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⏰ Horario</div>
+                        <div class="info-value">16:30 - 23:00 hrs</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎭 Incluye</div>
+                        <div class="info-value">Shows, altares, cementerio maya</div>
+                    </div>
+                </div>
+                <div class="price-tag">Desde $1,500 pesos (consultar paquetes)</div>
+                <p><strong>💡 Nota:</strong> Incluye acceso al parque, espectáculos nocturnos y actividades especiales. 
+                Consulta paquetes con hotel en el sitio oficial.</p>
+            </div>
+</body>
+</html>
